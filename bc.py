@@ -27,13 +27,15 @@ def simulate_policy_bc(env, policy, expert_data, num_epochs=500, episode_length=
     N = obs_all.shape[0]
 
     optimizer = optim.Adam(list(policy.parameters()), lr=1e-4)
-    idxs = np.array(range(len(expert_data)))
-    num_batches = len(idxs)*episode_length // batch_size
+    #idxs = np.array(range(len(expert_data)))
+    idxs = np.arange(N) 
+    num_batches = N // batch_size
+    #num_batches = len(idxs)*episode_length // batch_size
     losses = []
-    flattened_idxs = np.concatenate([
-                        np.arange(idx * episode_length, (idx + 1) * episode_length) 
-                        for idx in idxs
-                    ])
+    # flattened_idxs = np.concatenate([
+    #                     np.arange(idx * episode_length, (idx + 1) * episode_length) 
+    #                     for idx in idxs
+    #                 ])
     for epoch in range(num_epochs):
         np.random.shuffle(idxs)
         running_loss = 0.0
@@ -43,7 +45,7 @@ def simulate_policy_bc(env, policy, expert_data, num_epochs=500, episode_length=
             # Sample a minibatch of (obs, action) pairs, compute the negative log-likelihood
             # of the actions under the policy, and assign it to `loss`.
 
-            batch_idxs = flattened_idxs[i * batch_size : (i + 1) * batch_size]
+            batch_idxs = idxs[i * batch_size : (i + 1) * batch_size]
 
             obs_batch = obs_all[batch_idxs]
             acs_batch = acs_all[batch_idxs]
