@@ -35,8 +35,9 @@ def simulate_policy_dagger(env, policy, expert_paths, expert_policy=None, num_ep
         acs_all = torch.from_numpy(flat_ac).float().to(device)
         N = obs_all.shape[0]
 
-        idxs = np.array(range(len(trajs)))
-        num_batches = len(idxs)*episode_length // batch_size
+        #idxs = np.array(range(len(trajs)))
+        idxs = np.arange(N) 
+        num_batches = N // batch_size
         # Train the model with Adam
         for epoch in range(num_epochs):
             running_loss = 0.0
@@ -46,11 +47,8 @@ def simulate_policy_dagger(env, policy, expert_paths, expert_policy=None, num_ep
                 # Sample a minibatch of (obs, action) pairs from the current aggregated dataset,
                 # compute the negative log-likelihood of the actions under the policy,
                 # and assign it to `loss`.
-                flattened_idxs = np.concatenate([
-                                     np.arange(idx * episode_length, (idx + 1) * episode_length) 
-                                     for idx in idxs
-                ])
-                batch_idxs = flattened_idxs[i * batch_size : (i + 1) * batch_size]
+
+                batch_idxs = idxs[i * batch_size : (i + 1) * batch_size]
 
                 obs_batch = obs_all[batch_idxs]
                 acs_batch = acs_all[batch_idxs]
