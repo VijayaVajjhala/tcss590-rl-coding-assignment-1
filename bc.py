@@ -30,6 +30,10 @@ def simulate_policy_bc(env, policy, expert_data, num_epochs=500, episode_length=
     idxs = np.array(range(len(expert_data)))
     num_batches = len(idxs)*episode_length // batch_size
     losses = []
+    flattened_idxs = np.concatenate([
+                        np.arange(idx * episode_length, (idx + 1) * episode_length) 
+                        for idx in idxs
+                    ])
     for epoch in range(num_epochs):
         np.random.shuffle(idxs)
         running_loss = 0.0
@@ -38,10 +42,7 @@ def simulate_policy_bc(env, policy, expert_data, num_epochs=500, episode_length=
             # TODO start: Fill in your behavior cloning implementation here, just maximize log likelihood!
             # Sample a minibatch of (obs, action) pairs, compute the negative log-likelihood
             # of the actions under the policy, and assign it to `loss`.
-            flattened_idxs = np.concatenate([
-                                    np.arange(idx * episode_length, (idx + 1) * episode_length) 
-                                    for idx in idxs
-            ])
+
             batch_idxs = flattened_idxs[i * batch_size : (i + 1) * batch_size]
 
             obs_batch = obs_all[batch_idxs]
