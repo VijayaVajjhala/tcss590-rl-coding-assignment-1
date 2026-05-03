@@ -100,8 +100,12 @@ class PolicyAutoRegressiveModel(nn.Module):
             # to the running log_probs and undiscretize the sample add append it to vals.
             # Important - use previous *sampled* actions
             #pass
-            prev_act = torch.cat(vals, dim=-1) 
-            inp = torch.cat([state, prev_act], dim=-1)
+            if len(vals) == 0:
+                inp = state
+            else:
+                prev_act = torch.cat(vals, dim=-1)
+                inp = torch.cat([state, prev_act], dim=-1)
+
             logits = self.trunks[j](inp)
             dist = Categorical(logits=logits)
             sample = dist.sample()
