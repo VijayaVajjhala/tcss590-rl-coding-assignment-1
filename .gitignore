@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (downloaded by scripts/download_data.sh)
+data/*.pkl
+
+# Trained checkpoints
+*.pth
+
+# Student-generated results
+results/
+results_log.txt
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
