@@ -69,7 +69,7 @@ if __name__ == '__main__':
         raise ValueError('Invalid environment')
 
     # Define policy
-    hidden_dim = 256
+    hidden_dim = 128
     hidden_depth = 2
     obs_size = env.observation_space.shape[0]
     ac_size = env.action_space.shape[0]
@@ -88,11 +88,11 @@ if __name__ == '__main__':
     # Training hyperparameters for BC
     if args.env == 'reacher':
         episode_length = 50
-        num_epochs = 700
+        num_epochs = 500
         batch_size = 32
     elif args.env == 'pointmaze':
         episode_length = 300
-        num_epochs = 50
+        num_epochs = 10
         batch_size = 128
     else:
         raise ValueError('Invalid environment')
@@ -116,9 +116,9 @@ if __name__ == '__main__':
                 raise ValueError('Invalid environment')
 
             # Training hyperparameters for DAgger
-            num_dagger_iters=30
+            num_dagger_iters=10
             num_epochs = int(num_epochs/num_dagger_iters)
-            num_trajs_per_dagger=20
+            num_trajs_per_dagger=10
             # Train DAgger
             simulate_policy_dagger(env, policy, expert_data, expert_policy, num_epochs=num_epochs, episode_length=episode_length,
                             batch_size=batch_size, num_dagger_iters=num_dagger_iters, num_trajs_per_dagger=num_trajs_per_dagger)
