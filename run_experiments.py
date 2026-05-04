@@ -89,9 +89,9 @@ def run_one(env_name, train, policy_name):
     policy = make_policy(env, policy_name, flat).to(device)
 
     if env_name == "reacher":
-        episode_length, num_epochs, batch_size = 50, 500, 32
+        episode_length, num_epochs, batch_size = 50, 700, 32
     else:
-        episode_length, num_epochs, batch_size = 300, 10, 128
+        episode_length, num_epochs, batch_size = 300, 200, 128
 
     if train == "behavior_cloning":
         losses = simulate_policy_bc(env, policy, expert_data,
