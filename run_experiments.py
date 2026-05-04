@@ -108,7 +108,7 @@ def run_one(env_name, train, policy_name):
             #ptu.set_gpu_mode(torch.backends.mps.is_available() or torch.cuda.is_available())
         else:
             expert_policy = WaypointController(env.maze)
-        num_dagger_iters = 10
+        num_dagger_iters = 30
         ne = num_epochs // num_dagger_iters if num_epochs >= num_dagger_iters else 1
         losses, returns = simulate_policy_dagger(
             env, policy, expert_data, expert_policy,
