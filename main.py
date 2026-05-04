@@ -88,11 +88,11 @@ if __name__ == '__main__':
     # Training hyperparameters for BC
     if args.env == 'reacher':
         episode_length = 50
-        num_epochs = 500
+        num_epochs = 700
         batch_size = 32
     elif args.env == 'pointmaze':
         episode_length = 300
-        num_epochs = 10
+        num_epochs = 200
         batch_size = 128
     else:
         raise ValueError('Invalid environment')
