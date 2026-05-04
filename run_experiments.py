@@ -91,7 +91,7 @@ def run_one(env_name, train, policy_name):
     if env_name == "reacher":
         episode_length, num_epochs, batch_size = 50, 500, 32
     else:
-        episode_length, num_epochs, batch_size = 300, 50, 128
+        episode_length, num_epochs, batch_size = 300, 10, 128
 
     if train == "behavior_cloning":
         losses = simulate_policy_bc(env, policy, expert_data,
@@ -108,7 +108,7 @@ def run_one(env_name, train, policy_name):
             #ptu.set_gpu_mode(torch.backends.mps.is_available() or torch.cuda.is_available())
         else:
             expert_policy = WaypointController(env.maze)
-        num_dagger_iters = 30
+        num_dagger_iters = 10
         ne = num_epochs // num_dagger_iters if num_epochs >= num_dagger_iters else 1
         losses, returns = simulate_policy_dagger(
             env, policy, expert_data, expert_policy,
