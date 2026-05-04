@@ -58,6 +58,7 @@ def simulate_policy_dagger(env, policy, expert_paths, expert_policy=None, num_ep
                 #loss = None
                 # TODO end
                 loss.backward()
+                torch.nn.utils.clip_grad_norm_(policy.parameters(), max_norm=1.0) 
                 optimizer.step()
 
                 # print statistics
