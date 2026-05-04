@@ -10,8 +10,8 @@ from utils import rollout, relabel_action
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 #device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 
-def simulate_policy_dagger(env, policy, expert_paths, expert_policy=None, num_epochs=500, episode_length=50,
-                            batch_size=32, num_dagger_iters=10, num_trajs_per_dagger=10):
+def simulate_policy_dagger(env, policy, expert_paths, expert_policy=None, num_epochs=50, episode_length=50,
+                            batch_size=32, num_dagger_iters=30, num_trajs_per_dagger=10):
 
     # Fill in your dagger implementation in this function.
 
@@ -20,7 +20,7 @@ def simulate_policy_dagger(env, policy, expert_paths, expert_policy=None, num_ep
     # Repeat this so the dataset grows with states drawn from the policy, and relabeled actions using the expert.
 
     # Optimizer code
-    optimizer = optim.Adam(list(policy.parameters())) 
+    optimizer = optim.Adam(list(policy.parameters()), lr=1e-4) 
     losses = []
     returns = []
 
@@ -40,6 +40,7 @@ def simulate_policy_dagger(env, policy, expert_paths, expert_policy=None, num_ep
         num_batches = N // batch_size
         # Train the model with Adam
         for epoch in range(num_epochs):
+            np.random.shuffle(idxs) 
             running_loss = 0.0
             for i in range(num_batches):
                 optimizer.zero_grad()
