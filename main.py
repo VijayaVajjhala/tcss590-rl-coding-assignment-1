@@ -92,7 +92,7 @@ if __name__ == '__main__':
         batch_size = 32
     elif args.env == 'pointmaze':
         episode_length = 300
-        num_epochs = 200
+        num_epochs = 50
         batch_size = 128
     else:
         raise ValueError('Invalid environment')
@@ -116,7 +116,7 @@ if __name__ == '__main__':
                 raise ValueError('Invalid environment')
 
             # Training hyperparameters for DAgger
-            num_dagger_iters=10
+            num_dagger_iters=30
             num_epochs = int(num_epochs/num_dagger_iters)
             num_trajs_per_dagger=10
             # Train DAgger
