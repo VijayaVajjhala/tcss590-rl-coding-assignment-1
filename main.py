@@ -116,7 +116,7 @@ if __name__ == '__main__':
                 raise ValueError('Invalid environment')
 
             # Training hyperparameters for DAgger
-            num_dagger_iters=30
+            num_dagger_iters=10
             num_epochs = int(num_epochs/num_dagger_iters)
             num_trajs_per_dagger=10
             # Train DAgger
