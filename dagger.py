@@ -20,7 +20,7 @@ def simulate_policy_dagger(env, policy, expert_paths, expert_policy=None, num_ep
     # Repeat this so the dataset grows with states drawn from the policy, and relabeled actions using the expert.
 
     # Optimizer code
-    optimizer = optim.Adam(list(policy.parameters()), lr=1e-4) 
+    optimizer = optim.Adam(list(policy.parameters())) 
     losses = []
     returns = []
 
